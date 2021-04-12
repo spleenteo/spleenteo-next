@@ -32,12 +32,6 @@ export async function getStaticProps({ preview }) {
               ...responsiveImageFragment
             }
           }
-          author {
-            name
-            picture {
-              url(imgixParams: {fm: jpg, fit: crop, w: 100, h: 100, sat: -100})
-            }
-          }
         }
       }
 
