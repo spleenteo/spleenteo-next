@@ -18,11 +18,14 @@ export async function getStaticProps({ preview }) {
           }
         }
         blog {
+          title
+          subtitle  
           seo: _seoMetaTags {
             ...metaTagsFragment
           }
         }
-        allPosts(orderBy: date_DESC, first: 20) {
+        allPosts(orderBy: date_DESC, first: 20, filter: {isPublic: { eq: true }}) {
+
           title
           slug
           excerpt
