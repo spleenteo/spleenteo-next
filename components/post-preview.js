@@ -1,6 +1,6 @@
-import Avatar from '../components/avatar'
 import Date from '../components/date'
 import CoverImage from './cover-image'
+import PostMeta from '../components/post-meta'
 import Link from 'next/link'
 
 export default function PostPreview({
@@ -8,8 +8,8 @@ export default function PostPreview({
   coverImage,
   date,
   excerpt,
-  author,
   slug,
+  category,
 }) {
   return (
     <div>
@@ -25,10 +25,11 @@ export default function PostPreview({
           <a className="hover:underline">{title}</a>
         </Link>
       </h3>
-      <div className="text-lg mb-4">
-        <Date dateString={date} />
-      </div>
       <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
+      <PostMeta
+        category={category}
+        date={date}
+      />
     </div>
   )
 }

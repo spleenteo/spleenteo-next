@@ -1,6 +1,6 @@
 import Avatar from '../components/avatar'
-import Date from '../components/date'
 import CoverImage from '../components/cover-image'
+import PostMeta from '../components/post-meta'
 import Link from 'next/link'
 
 export default function HeroPost({
@@ -10,6 +10,7 @@ export default function HeroPost({
   excerpt,
   author,
   slug,
+  category,
 }) {
   return (
     <section>
@@ -27,9 +28,10 @@ export default function HeroPost({
               <a className="hover:underline">{title}</a>
             </Link>
           </h3>
-          <div className="mb-4 md:mb-0 text-lg">
-            <Date dateString={date} />
-          </div>
+          <PostMeta
+            category={category}
+            date={date}
+          />
         </div>
       </div>
     </section>

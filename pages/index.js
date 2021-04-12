@@ -25,7 +25,6 @@ export async function getStaticProps({ preview }) {
           }
         }
         allPosts(orderBy: date_DESC, first: 20, filter: {isPublic: { eq: true }}) {
-
           title
           slug
           excerpt
@@ -34,6 +33,10 @@ export async function getStaticProps({ preview }) {
             responsiveImage(imgixParams: {fm: jpg, fit: crop, w: 2000, h: 1000 }) {
               ...responsiveImageFragment
             }
+          }
+          category{
+            name
+            slug
           }
         }
       }
@@ -85,6 +88,7 @@ export default function Index({ subscription }) {
               date={heroPost.date}
               slug={heroPost.slug}
               excerpt={heroPost.excerpt}
+              category={heroPost.category}
             />
           )}
           {morePosts.length > 0 && <MoreStories posts={morePosts} />}
