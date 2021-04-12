@@ -124,10 +124,14 @@ export default function Post({ subscription, preview }) {
             title={post.title}
             coverImage={post.coverImage}
             date={post.date}
-            author={post.author}
           />
           <PostBody content={post.content} />
         </article>
+        <SectionSeparator />
+        <div>
+          <h4 className="mb-8 text-3xl md:text-3xl font-bold tracking-tighter leading-tight">{post.category.name}</h4>
+          <div dangerouslySetInnerHTML={{__html: post.category.description}} />
+        </div>
         <SectionSeparator />
         {morePosts.length > 0 && <MoreStories posts={morePosts} />}
       </Container>
