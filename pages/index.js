@@ -5,6 +5,7 @@ import HeroPost from "../components/hero-post";
 import Intro from "../components/intro";
 import Layout from "../components/layout";
 import MoreStories from "../components/more-stories";
+import SectionSeparator from "../components/section-separator";
 import { request } from "../lib/datocms";
 import { metaTagsFragment, responsiveImageFragment } from "../lib/fragments";
 
@@ -23,6 +24,11 @@ export async function getStaticProps({ preview }) {
           seo: _seoMetaTags {
             ...metaTagsFragment
           }
+        }
+        allCategories {
+          name
+          slug
+          description
         }
         allPosts(orderBy: date_DESC, first: 20, filter: {isPublic: { eq: true }}) {
           title
@@ -66,12 +72,14 @@ export async function getStaticProps({ preview }) {
 
 export default function Index({ subscription }) {
   const {
-    data: { allPosts, site, blog },
+    data: { allPosts, allCategories, site, blog },
   } = useQuerySubscription(subscription);
 
   const heroPost = allPosts[0];
-  const morePosts = allPosts.slice(1);
+  const higlights = allPosts[1];
+  const morePosts = allPosts.slice(2);
   const metaTags = blog.seo.concat(site.favicon);
+  const categories = allCategories;
 
   return (
     <>
@@ -91,6 +99,12 @@ export default function Index({ subscription }) {
               category={heroPost.category}
             />
           )}
+          {higlights.length > 0 && <MoreStories posts={higlights} />}
+          <SectionSeparator />
+          <ul>
+            {categories.map(cat =><li>{cat.name}</li>)}
+          </ul>
+          <SectionSeparator />
           {morePosts.length > 0 && <MoreStories posts={morePosts} />}
         </Container>
       </Layout>

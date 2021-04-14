@@ -1,4 +1,6 @@
 import { StructuredText, Image } from "react-datocms";
+import React from 'react'
+import ReactPlayer from 'react-player'
 
 export default function PostBody({ content }) {
   return (
@@ -7,16 +9,20 @@ export default function PostBody({ content }) {
         <StructuredText
           data={content}
           renderBlock={({ record }) => {
-            if (record.__typename === "ImageBlockRecord") {
-              return <Image data={record.image.responsiveImage} />;
-            }
+            switch (record.__typename) {
+              case "ImageBlockRecord":
+                return <Image data={record.image.responsiveImage} />;
+              case "VideoBlockRecord":
+                return <ReactPlayer url={record.video.url} controls="true" />
 
-            return (
-              <>
-                <p>Don't know how to render a block!</p>
-                <pre>{JSON.stringify(record, null, 2)}</pre>
-              </>
-            );
+              default:
+                return (
+                  <>
+                    <p>Don't know how to render a block!</p>
+                    <pre>{JSON.stringify(record, null, 2)}</pre>
+                  </>
+                );
+            }
           }}
         />
       </div>
