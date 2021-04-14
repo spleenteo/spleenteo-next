@@ -46,6 +46,13 @@ export async function getStaticProps({ params, preview = false }) {
                   }
                 }
               }
+              ... on VideoBlockRecord {
+                id
+                video {
+                  url
+                  thumbnailUrl
+                }
+              }
             }
           }
           date
