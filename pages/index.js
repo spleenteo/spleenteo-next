@@ -3,6 +3,7 @@ import { renderMetaTags, useQuerySubscription } from "react-datocms";
 import Container from "../components/container";
 import HeroPost from "../components/hero-post";
 import Intro from "../components/intro";
+import SiteNav from "../components/site-nav";
 import Layout from "../components/layout";
 import MoreStories from "../components/more-stories";
 import SectionSeparator from "../components/section-separator";
@@ -85,6 +86,7 @@ export default function Index({ subscription }) {
     <>
       <Layout preview={subscription.preview}>
         <Head>{renderMetaTags(metaTags)}</Head>
+        <SiteNav />
         <Container>
           <Intro
             title={blog.title}
