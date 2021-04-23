@@ -4,11 +4,11 @@ import Container from "../components/container";
 import Intro from "../components/intro";
 import Layout from "../components/layout";
 import Header from "../components/header";
+import SiteHeader from "../components/site-header";
 import PostHeader from "../components/post-header";
 import PostBody from "../components/post-body";
 import PostTitle from '../components/post-title'
 import MoreStories from "../components/more-stories";
-import SectionSeparator from "../components/section-separator";
 
 import { request } from "../lib/datocms";
 import { metaTagsFragment, responsiveImageFragment } from "../lib/fragments";
@@ -93,7 +93,7 @@ export default function Index({ subscription }) {
       <Layout preview={subscription.preview}>
         <Head>{renderMetaTags(metaTags)}</Head>
         <Container>
-          <Intro
+          <SiteHeader
             title={blog.title}
             subtitle={blog.subtitle}
           />
@@ -102,7 +102,6 @@ export default function Index({ subscription }) {
             <PostBody content={about.content} />
           </article>
 
-          <SectionSeparator />
         </Container>
       </Layout>
     </>
