@@ -4,7 +4,7 @@ import Container from "../components/container";
 import Intro from "../components/intro";
 import Layout from "../components/layout";
 import Header from "../components/header";
-import SiteHeader from "../components/site-header";
+import SiteNav from "../components/site-nav";
 import PostHeader from "../components/post-header";
 import PostBody from "../components/post-body";
 import PostTitle from '../components/post-title'
@@ -92,11 +92,8 @@ export default function Index({ subscription }) {
     <>
       <Layout preview={subscription.preview}>
         <Head>{renderMetaTags(metaTags)}</Head>
+        <SiteNav />
         <Container>
-          <SiteHeader
-            title={blog.title}
-            subtitle={blog.subtitle}
-          />
           <article>
             <PostTitle>{about.title}</PostTitle>
             <PostBody content={about.content} />
