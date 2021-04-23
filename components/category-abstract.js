@@ -7,7 +7,7 @@ export default function PostPreview({
 }) {
   return (
     <div className="mb-10">
-      <h2 className="text-3xl mb-3 leading-snug mb-2">
+      <h2 className="mb-4 text-3xl md:text-3xl font-bold tracking-tighter leading-tight">
         <Link as={`/cayegories/${slug}`} href="/cattegories/[slug]">
           <a className="hover:underline">{name}</a>
         </Link>

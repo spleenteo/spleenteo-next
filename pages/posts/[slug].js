@@ -12,6 +12,7 @@ import SiteHeader from "../../components/site-header";
 import SectionSeparator from "../../components/section-separator";
 import { request } from "../../lib/datocms";
 import { metaTagsFragment, responsiveImageFragment } from "../../lib/fragments";
+import CategoryAbstract from "../../components/category-abstract";
 
 export async function getStaticPaths() {
   const data = await request({ query: `{ allPosts { slug } }` });
@@ -142,10 +143,13 @@ export default function Post({ subscription, preview }) {
           <PostBody content={post.content} />
         </article>
         <SectionSeparator />
-        <div>
-          <h4 className="mb-8 text-3xl md:text-3xl font-bold tracking-tighter leading-tight">{post.category.name}</h4>
-          <div dangerouslySetInnerHTML={{__html: post.category.description}} />
-        </div>
+        
+        <CategoryAbstract
+          key={post.category.slug}
+          name={post.category.name}
+          description={post.category.description}
+          slug={post.category.slug}
+        />
         <SectionSeparator />
         {morePosts.length > 0 && <MoreStories posts={morePosts} />}
       </Container>
