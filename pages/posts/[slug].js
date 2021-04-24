@@ -3,16 +3,12 @@ import { renderMetaTags, useQuerySubscription } from "react-datocms";
 import Container from "../../components/container";
 import Header from "../../components/header";
 import Layout from "../../components/layout";
-import SiteNav from "../../components/site-nav";
-
 import MoreStories from "../../components/more-stories";
 import PostBody from "../../components/post-body";
 import PostHeader from "../../components/post-header";
-import SiteHeader from "../../components/site-header";
 import SectionSeparator from "../../components/section-separator";
 import { request } from "../../lib/datocms";
 import { metaTagsFragment, responsiveImageFragment } from "../../lib/fragments";
-import CategoryAbstract from "../../components/category-abstract";
 
 export async function getStaticPaths() {
   const data = await request({ query: `{ allPosts { slug } }` });
@@ -31,10 +27,6 @@ export async function getStaticProps({ params, preview = false }) {
           favicon: faviconMetaTags {
             ...metaTagsFragment
           }
-        }
-        blog{
-          title
-          subtitle
         }
         post(filter: {slug: {eq: $slug}}) {
           seo: _seoMetaTags {
@@ -124,7 +116,7 @@ export async function getStaticProps({ params, preview = false }) {
 
 export default function Post({ subscription, preview }) {
   const {
-    data: { site, post, morePosts, blog },
+    data: { site, post, morePosts },
   } = useQuerySubscription(subscription);
 
   const metaTags = post.seo.concat(site.favicon);
@@ -132,8 +124,8 @@ export default function Post({ subscription, preview }) {
   return (
     <Layout preview={preview}>
       <Head>{renderMetaTags(metaTags)}</Head>
-      <SiteNav />
       <Container>
+        <Header />
         <article>
           <PostHeader
             title={post.title}
@@ -143,13 +135,10 @@ export default function Post({ subscription, preview }) {
           <PostBody content={post.content} />
         </article>
         <SectionSeparator />
-        
-        <CategoryAbstract
-          key={post.category.slug}
-          name={post.category.name}
-          description={post.category.description}
-          slug={post.category.slug}
-        />
+        <div>
+          <h4 className="mb-8 text-3xl md:text-3xl font-bold tracking-tighter leading-tight">{post.category.name}</h4>
+          <div dangerouslySetInnerHTML={{__html: post.category.description}} />
+        </div>
         <SectionSeparator />
         {morePosts.length > 0 && <MoreStories posts={morePosts} />}
       </Container>
