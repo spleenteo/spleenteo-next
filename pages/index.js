@@ -4,6 +4,7 @@ import Container from "../components/container";
 import HeroPost from "../components/hero-post";
 import Intro from "../components/intro";
 import SiteNav from "../components/site-nav";
+import Link from 'next/link'
 import Layout from "../components/layout";
 import MoreStories from "../components/more-stories";
 import SectionSeparator from "../components/section-separator";
@@ -102,11 +103,15 @@ export default function Index({ subscription }) {
             />
           )}
           {higlights.length > 0 && <MoreStories posts={higlights} />}
-          <SectionSeparator />
-          <ul>
-            {categories.map(cat =><li>{cat.name}</li>)}
+          <ul className="flex flex-row space-x-4 my-8">
+            {categories.map(cat =>
+              <li className="rounded-md bg-green-500 text-white flex items-center justify-center text-2xl font-bold rounded-t-xl p-2 px-4">
+                <Link as={`/categories/${cat.slug}`} href="/categories/[slug]">
+                  <a className="hover:underline">{cat.name}</a>
+                </Link>
+              </li>
+            )}
           </ul>
-          <SectionSeparator />
           {morePosts.length > 0 && <MoreStories posts={morePosts} />}
         </Container>
       </Layout>
