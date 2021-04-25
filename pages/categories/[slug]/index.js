@@ -1,21 +1,15 @@
 import Head from "next/head";
 import { renderMetaTags, useQuerySubscription } from "react-datocms";
 import Container from "../../../components/container";
-import Header from "../../../components/header";
 import Layout from "../../../components/layout";
 import SiteNav from "../../../components/site-nav";
-
-import MoreStories from "../../../components/more-stories";
-import PostBody from "../../../components/post-body";
-import PostHeader from "../../../components/post-header";
-import SiteHeader from "../../../components/site-header";
-import SectionSeparator from "../../../components/section-separator";
+import PostPreview from '../../../components/post-preview'
 import { request } from "../../../lib/datocms";
+import PostTitle from '../../../components/post-title'
 import { metaTagsFragment, responsiveImageFragment } from "../../../lib/fragments";
-import CategoryAbstract from "../../../components/category-abstract";
 
 export async function getStaticPaths() {
-  const data = await request({ query: `{ allCategories { slug } }` });
+  const data = await request({ query: `{ allCategories { slug id } }` });
 
   return {
     paths: data.allCategories.map((category) => `/categories/${category.slug}`),
@@ -26,7 +20,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params, preview = false }) {
   const graphqlRequest = {
     query: `
-      query CategoryBySlug($slug: String) {
+      query CategoryBySlug($slug: String, $id: ItemId) {
         site: _site {
           favicon: faviconMetaTags {
             ...metaTagsFragment
@@ -40,13 +34,30 @@ export async function getStaticProps({ params, preview = false }) {
             ...metaTagsFragment
           }
         }
-      }
+        allPosts(filter: {isPublic: {eq: true}, category: {eq: $id}}) {
+          title
+          excerpt
+          slug
+          date
+          category{
+            name
+            slug
+          }
+          coverImage {
+            responsiveImage(imgixParams: {fm: jpg, fit: crop, w: 800, h: 800 }) {
+              ...responsiveImageFragment
+            }
+          }
 
+        }
+      }
       ${metaTagsFragment}
+      ${responsiveImageFragment}
     `,
     preview,
     variables: {
-      slug: params.slug
+      slug: params.slug,
+      id: params.id
     },
   };
 
@@ -68,25 +79,35 @@ export async function getStaticProps({ params, preview = false }) {
 
 export default function Category({ subscription, preview }) {
   const {
-    data: { site, category },
+    data: { site, category, allPosts },
   } = useQuerySubscription(subscription);
 
   const metaTags = category.seo.concat(site.favicon);
+  const articles = allPosts;
 
   return (
     <Layout preview={preview}>
       <Head>{renderMetaTags(metaTags)}</Head>
       <SiteNav />
       <Container>
-        <SectionSeparator />
-        
-        <CategoryAbstract
-          key={category.slug}
-          name={category.name}
-          description={category.description}
-          slug={category.slug}
-        />
-        <SectionSeparator />
+        <PostTitle>{category.name}</PostTitle>
+        <div className="mb-6" dangerouslySetInnerHTML={{__html: category.description}} />
+        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-16 lg:gap-x-32 gap-y-20 md:gap-y-32 mb-32">
+
+          {articles.map(post =>
+            <PostPreview
+              key={post.slug}
+              title={post.title}
+              coverImage={post.coverImage}
+              date={post.date}
+              author={post.author}
+              slug={post.slug}
+              excerpt={post.excerpt}
+              category={post.category}
+            />      
+          )}
+        </div>
+
       </Container>
     </Layout>
   );
