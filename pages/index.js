@@ -8,6 +8,7 @@ import Link from 'next/link'
 import Layout from "../components/layout";
 import MoreStories from "../components/more-stories";
 import SectionSeparator from "../components/section-separator";
+import PostPreview from '../components/post-preview'
 import { request } from "../lib/datocms";
 import { metaTagsFragment, responsiveImageFragment } from "../lib/fragments";
 
@@ -77,9 +78,10 @@ export default function Index({ subscription }) {
     data: { allPosts, allCategories, site, blog },
   } = useQuerySubscription(subscription);
 
+  console.log(allPosts.slice(2))
   const heroPost = allPosts[0];
-  const higlights = allPosts[1];
-  const morePosts = allPosts.slice(1);
+  const higlights = [allPosts[1], allPosts[2]];
+  const morePosts = allPosts.slice(3);
   const metaTags = blog.seo.concat(site.favicon);
   const categories = allCategories;
 
@@ -102,17 +104,24 @@ export default function Index({ subscription }) {
               category={heroPost.category}
             />
           )}
-          {higlights.length > 0 && <MoreStories posts={higlights} />}
-          <ul className="flex flex-row space-x-4 my-8">
-            {categories.map(cat =>
-              <li className="rounded-md bg-green-500 text-white flex items-center justify-center text-2xl font-bold rounded-t-xl p-2 px-4">
-                <Link as={`/categories/${cat.slug}`} href="/categories/[slug]">
-                  <a className="hover:underline">{cat.name}</a>
-                </Link>
-              </li>
-            )}
-          </ul>
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-16 lg:gap-x-32 gap-y-20 md:gap-y-32 mb-32">
+            {higlights.map(post => (
+              <PostPreview
+                key={post.slug}
+                title={post.title}
+                coverImage={post.coverImage}
+                date={post.date}
+                author={post.author}
+                slug={post.slug}
+                excerpt={post.excerpt}
+                category={post.category}
+              />
+            ))}
+          </div>
+
+
+          {morePosts.length > 0 && <MoreStories posts={morePosts} categories={categories} />}
         </Container>
       </Layout>
     </>

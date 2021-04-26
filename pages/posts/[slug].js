@@ -71,7 +71,10 @@ export async function getStaticProps({ params, preview = false }) {
             slug
           }
         }
-
+        categories: allCategories{
+          slug
+          name
+        }
         morePosts: allPosts(orderBy: date_DESC, first: 2, filter: {slug: {neq: $slug}}) {
           title
           slug
@@ -116,7 +119,7 @@ export async function getStaticProps({ params, preview = false }) {
 
 export default function Post({ subscription, preview }) {
   const {
-    data: { site, post, morePosts },
+    data: { site, post, morePosts, categories },
   } = useQuerySubscription(subscription);
 
   const metaTags = post.seo.concat(site.favicon);
@@ -140,7 +143,7 @@ export default function Post({ subscription, preview }) {
           <div dangerouslySetInnerHTML={{__html: post.category.description}} />
         </div>
         <SectionSeparator />
-        {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+        {morePosts.length > 0 && <MoreStories posts={morePosts} categories={categories} />}
       </Container>
     </Layout>
   );
