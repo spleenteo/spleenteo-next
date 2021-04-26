@@ -1,13 +1,12 @@
-import Head from "next/head";
-import { renderMetaTags, useQuerySubscription } from "react-datocms";
-import Container from "../components/container";
-import Layout from "../components/layout";
-import SiteNav from "../components/site-nav";
-import PostTitle from '../components/post-title'
-import CategoryAbstract from "../components/category-abstract";
-
-import { request } from "../lib/datocms";
 import { metaTagsFragment } from "../lib/fragments";
+import { renderMetaTags, useQuerySubscription } from "react-datocms";
+import { request } from "../lib/datocms";
+import CategoryAbstract from "../components/category-abstract";
+import Container from "../components/container";
+import Head from "next/head";
+import Layout from "../components/layout";
+import PostTitle from '../components/post-title'
+import SiteNav from "../components/site-nav";
 
 export async function getStaticProps({ preview }) {
   const graphqlRequest = {
