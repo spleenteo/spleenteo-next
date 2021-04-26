@@ -61,13 +61,26 @@ export async function getStaticProps({ preview }) {
 
 export default function Index({ subscription }) {
   const {
-    data: { categoryPage, allCategories, site },
+    data: { categoryPage, allCategories, site, allPosts },
   } = useQuerySubscription(subscription);
 
   const page = categoryPage;
   const metaTags = page.seo.concat(site.favicon);
-  const categories = allCategories;
-  // const morePosts = allPosts.slice(1);
+  const posts = allPosts
+  const categories = []
+  
+  // Only consider categories with one or more posts
+  allCategories.map(cat => {
+    let categoryPostsCounter = 0;    
+    posts.map(post => {
+      if(post.category.id == cat.id){
+        categoryPostsCounter++;
+      }
+    });
+    if(categoryPostsCounter > 0){
+      categories.push(cat);
+    }
+  });
 
   return (
     <>
