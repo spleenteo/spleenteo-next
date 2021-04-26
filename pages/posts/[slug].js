@@ -13,10 +13,11 @@ import { metaTagsFragment, responsiveImageFragment } from "../../lib/fragments";
 export async function getStaticPaths() {
   const data = await request({ query: `{ allPosts { slug } }` });
 
-  return {
-    paths: data.allPosts.map((post) => `/posts/${post.slug}`),
-    fallback: false,
-  };
+  const paths = data.allPosts.map((post) => ({
+    params: { slug: post.slug },
+  }))
+
+  return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params, preview = false }) {
@@ -69,7 +70,6 @@ export async function getStaticProps({ params, preview = false }) {
             description
             slug
           }
-
         }
 
         morePosts: allPosts(orderBy: date_DESC, first: 2, filter: {slug: {neq: $slug}}) {
