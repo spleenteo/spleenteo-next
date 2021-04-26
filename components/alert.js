@@ -22,18 +22,7 @@ export default function Alert({ preview }) {
               </a>{' '}
               to exit preview mode.
             </>
-          ) : (
-            <>
-              This is page is showing published content.{' '}
-              <a
-                href="/api/preview"
-                className="underline hover:text-cyan duration-200 transition-colors"
-              >
-                Click here
-              </a>{' '}
-              to enter preview mode!
-            </>
-          )}
+          ) : ("")}
         </div>
       </Container>
     </div>
