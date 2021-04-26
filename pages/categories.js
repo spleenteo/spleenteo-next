@@ -23,10 +23,17 @@ export async function getStaticProps({ preview }) {
             ...metaTagsFragment
           }
         }
+        allPosts {
+          id
+          category {
+            id
+          }
+        }
         allCategories {
           name
           slug
           description
+          id
         }
       }
 
