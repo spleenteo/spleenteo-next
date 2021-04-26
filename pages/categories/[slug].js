@@ -9,11 +9,6 @@ import PostTitle from '../../components/post-title'
 import { metaTagsFragment, responsiveImageFragment } from "../../lib/fragments";
 
 export async function getStaticPaths() {
-
-  // /posts/slug/  <-- singolo post
-  // /categories/ <-- elenco delle categorie
-  // /categories/music/ <-- pagina categoria con link a post
-  
   const data = await request({ query: `{ allCategories { slug id } }` });
   
   const paths = data.allCategories.map((category) => ({
