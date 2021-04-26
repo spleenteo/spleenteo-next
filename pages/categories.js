@@ -1,16 +1,10 @@
 import Head from "next/head";
 import { renderMetaTags, useQuerySubscription } from "react-datocms";
-import Container from "../components/container";
-import Intro from "../components/intro";
-import Layout from "../components/layout";
-import Header from "../components/header";
-import SiteNav from "../components/site-nav";
-import PostHeader from "../components/post-header";
-import PostBody from "../components/post-body";
-import PostTitle from '../components/post-title'
-import MoreStories from "../components/more-stories";
 import CategoryAbstract from "../components/category-abstract";
-
+import Container from "../components/container";
+import Layout from "../components/layout";
+import PostTitle from '../components/post-title';
+import SiteNav from "../components/site-nav";
 import { request } from "../lib/datocms";
 import { metaTagsFragment } from "../lib/fragments";
 
@@ -29,10 +23,17 @@ export async function getStaticProps({ preview }) {
             ...metaTagsFragment
           }
         }
+        allPosts {
+          id
+          category {
+            id
+          }
+        }
         allCategories {
           name
           slug
           description
+          id
         }
       }
 
@@ -60,13 +61,26 @@ export async function getStaticProps({ preview }) {
 
 export default function Index({ subscription }) {
   const {
-    data: { categoryPage, allCategories, site },
+    data: { categoryPage, allCategories, site, allPosts },
   } = useQuerySubscription(subscription);
 
   const page = categoryPage;
   const metaTags = page.seo.concat(site.favicon);
-  const categories = allCategories;
-  // const morePosts = allPosts.slice(1);
+  const posts = allPosts
+  const categories = []
+  
+  // Only consider categories with one or more posts
+  allCategories.map(cat => {
+    let categoryPostsCounter = 0;    
+    posts.map(post => {
+      if(post.category.id == cat.id){
+        categoryPostsCounter++;
+      }
+    });
+    if(categoryPostsCounter > 0){
+      categories.push(cat);
+    }
+  });
 
   return (
     <>
