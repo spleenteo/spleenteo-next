@@ -1,14 +1,9 @@
 import Head from "next/head";
 import { renderMetaTags, useQuerySubscription } from "react-datocms";
 import Container from "../components/container";
-import Intro from "../components/intro";
 import Layout from "../components/layout";
-import Header from "../components/header";
 import SiteNav from "../components/site-nav";
-import PostHeader from "../components/post-header";
-import PostBody from "../components/post-body";
 import PostTitle from '../components/post-title'
-import MoreStories from "../components/more-stories";
 import CategoryAbstract from "../components/category-abstract";
 
 import { request } from "../lib/datocms";
