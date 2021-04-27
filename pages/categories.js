@@ -7,6 +7,8 @@ import PostTitle from '../components/post-title';
 import SiteNav from "../components/site-nav";
 import { request } from "../lib/datocms";
 import { metaTagsFragment } from "../lib/fragments";
+import activeCategories from 'utils/activeCategories';
+
 
 export async function getStaticProps({ preview }) {
   const graphqlRequest = {
@@ -67,20 +69,7 @@ export default function Index({ subscription }) {
   const page = categoryPage;
   const metaTags = page.seo.concat(site.favicon);
   const posts = allPosts
-  const categories = []
-  
-  // Only consider categories with one or more posts
-  allCategories.map(cat => {
-    let categoryPostsCounter = 0;    
-    posts.map(post => {
-      if(post.category.id == cat.id){
-        categoryPostsCounter++;
-      }
-    });
-    if(categoryPostsCounter > 0){
-      categories.push(cat);
-    }
-  });
+  const categories = activeCategories(allCategories, allPosts);
 
   return (
     <>
