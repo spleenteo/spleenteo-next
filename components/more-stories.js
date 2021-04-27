@@ -8,9 +8,9 @@ export default function MoreStories({ posts, categories }) {
         Altre amenità
       </h2>
 
-      <ul className="flex flex-row space-x-4 my-8">
+      <ul className="flex flex-row flex-wrap space-x-4 my-8">
             {categories.map(cat =>
-              <li className="rounded-md bg-green-500 text-white flex items-center justify-center text-2xl font-bold rounded-t-xl p-2 px-4">
+              <li className="mb-3 rounded-md bg-green-500 text-white flex items-center justify-center text-2xl font-bold rounded-t-xl p-2 px-4">
                 <Link as={`/categories/${cat.slug}`} href="/categories/[slug]">
                   <a className="hover:underline">{cat.name}</a>
                 </Link>
