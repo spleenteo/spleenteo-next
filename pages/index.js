@@ -10,6 +10,7 @@ import SectionSeparator from "../components/section-separator";
 import PostPreview from '../components/post-preview'
 import { request } from "../lib/datocms";
 import { metaTagsFragment, responsiveImageFragment } from "../lib/fragments";
+import activeCategories from 'utils/activeCategories';
 
 export async function getStaticProps({ preview }) {
   const graphqlRequest = {
@@ -31,12 +32,14 @@ export async function getStaticProps({ preview }) {
           name
           slug
           description
+          id
         }
-        allPosts(orderBy: date_DESC, first: 20, filter: {isPublic: { eq: true }}) {
+        allPosts(orderBy: date_DESC, filter: {isPublic: { eq: true }}) {
           title
           slug
           excerpt
           date
+          id
           coverImage {
             responsiveImage(imgixParams: {fm: jpg, fit: crop, w: 2000, h: 1000 }) {
               ...responsiveImageFragment
@@ -45,6 +48,7 @@ export async function getStaticProps({ preview }) {
           category{
             name
             slug
+            id
           }
         }
       }
@@ -77,12 +81,11 @@ export default function Index({ subscription }) {
     data: { allPosts, allCategories, site, blog },
   } = useQuerySubscription(subscription);
 
-  console.log(allPosts.slice(2))
   const heroPost = allPosts[0];
   const higlights = [allPosts[1], allPosts[2]];
   const morePosts = allPosts.slice(3);
   const metaTags = blog.seo.concat(site.favicon);
-  const categories = allCategories;
+  const categories = activeCategories(allCategories, allPosts);
 
   return (
     <>
