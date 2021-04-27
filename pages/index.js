@@ -4,7 +4,6 @@ import Container from "../components/container";
 import HeroPost from "../components/hero-post";
 import Intro from "../components/intro";
 import SiteNav from "../components/site-nav";
-import Link from 'next/link'
 import Layout from "../components/layout";
 import MoreStories from "../components/more-stories";
 import SectionSeparator from "../components/section-separator";
