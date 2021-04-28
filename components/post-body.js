@@ -15,6 +15,11 @@ export default function PostBody({ content }) {
                 return <ResponsiveImage img={record.image.responsiveImage} />;
               case "VideoBlockRecord":
                 return <ReactPlayer url={record.video.url} controls="true" />
+              case "SoundcloudBlockRecord":
+                return <ReactPlayer
+                  url={record.url}
+                  controls="true"
+                />
 
               default:
                 return (

@@ -1,15 +1,15 @@
-import { metaTagsFragment, responsiveImageFragment } from "../lib/fragments";
-import { renderMetaTags, useQuerySubscription } from "react-datocms";
-import { request } from "../lib/datocms";
-import ActiveCategories from 'lib/activeCategories';
-import Container from "../components/container";
-import Head from "next/head";
-import HeroPost from "../components/hero-post";
-import Intro from "../components/intro";
-import Layout from "../components/layout";
-import MoreStories from "../components/more-stories";
-import PostPreview from '../components/post-preview'
-import SiteNav from "../components/site-nav";
+import { metaTagsFragment, responsiveImageFragment } from "lib/fragments"
+import { renderMetaTags, useQuerySubscription } from "react-datocms"
+import { request } from "lib/datocms"
+import activeCategories from 'lib/activeCategories'
+import Container from "components/container"
+import Head from "next/head"
+import HeroPost from "components/hero-post"
+import Intro from "components/intro"
+import Layout from "components/layout"
+import MoreStories from "components/more-stories"
+import PostPreview from 'components/post-preview'
+import SiteNav from "components/site-nav";
 
 export async function getStaticProps({ preview }) {
   const graphqlRequest = {
@@ -52,7 +52,7 @@ export async function getStaticProps({ preview }) {
     preview,
   };
 
-  const categories = await ActiveCategories()
+  const categories = await activeCategories()
   const initialData = await request(graphqlRequest)
 
   let subscription = null

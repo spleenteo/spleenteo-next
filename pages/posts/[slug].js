@@ -56,6 +56,10 @@ export async function getStaticProps({ params, preview = false }) {
                   thumbnailUrl
                 }
               }
+              ... on SoundcloudBlockRecord {
+                id
+                url
+              }
             }
           }
           date
