@@ -7,7 +7,7 @@ import PostTitle from '../components/post-title';
 import SiteNav from "../components/site-nav";
 import { request } from "../lib/datocms";
 import { metaTagsFragment } from "../lib/fragments";
-import activeCategories from 'utils/activeCategories';
+import activeCategories from 'lib/activeCategories';
 
 
 export async function getStaticProps({ preview }) {
@@ -44,32 +44,39 @@ export async function getStaticProps({ preview }) {
     preview,
   };
 
+  const categories = await activeCategories()
+  const initialData = await request(graphqlRequest)
+
+  let subscription = null
+  if(preview){
+    subscription = {
+      ...graphqlRequest,
+      initialData,
+      token: process.env.NEXT_EXAMPLE_CMS_DATOCMS_API_TOKEN,
+      environment: process.env.NEXT_DATOCMS_ENVIRONMENT || null,
+    }
+  } else {
+    subscription = {
+      enabled: false,
+      initialData,
+    }
+  }
+
   return {
     props: {
-      subscription: preview
-        ? {
-            ...graphqlRequest,
-            initialData: await request(graphqlRequest),
-            token: process.env.NEXT_EXAMPLE_CMS_DATOCMS_API_TOKEN,
-            environment: process.env.NEXT_DATOCMS_ENVIRONMENT || null,
-          }
-        : {
-            enabled: false,
-            initialData: await request(graphqlRequest),
-          },
+      subscription,
+      categories
     },
-  }; 
+  }
 }
 
-export default function Index({ subscription }) {
+export default function Index({ subscription, categories }) {
   const {
     data: { categoryPage, allCategories, site, allPosts },
   } = useQuerySubscription(subscription);
 
   const page = categoryPage;
   const metaTags = page.seo.concat(site.favicon);
-  const posts = allPosts
-  const categories = activeCategories(allCategories, allPosts);
 
   return (
     <>
@@ -90,7 +97,6 @@ export default function Index({ subscription }) {
               ))}              
             </div>
           </article>
-
         </Container>
       </Layout>
     </>

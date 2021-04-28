@@ -80,7 +80,7 @@ export async function getStaticProps({ preview }) {
 
 export default ({ subscription, categories }) => {
   const {
-    data: { allPosts, allCategories, site, blog },
+    data: { allPosts, site, blog },
   } = useQuerySubscription(subscription);
 
   const heroPost = allPosts[0];
