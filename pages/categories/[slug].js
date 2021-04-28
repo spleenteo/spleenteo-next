@@ -95,8 +95,8 @@ export default function Category({ subscription, preview }) {
       <SiteNav />
       <Container>
         <PostTitle>{category.name}</PostTitle>
-        <div className="mb-10" dangerouslySetInnerHTML={{__html: category.description}} />
-        <div className="grid grid-cols-1 md:grid-cols-3 md:gap-x-16 lg:gap-x-32 gap-y-20 md:gap-y-32 mb-32">
+        <div className="mb-10 md:text-2xl md:leading-relaxed" dangerouslySetInnerHTML={{__html: category.description}} />
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-x-16 lg:gap-x-8 gap-y-20 md:gap-y-32 mb-32">
           {articles.map(post =>
             <PostPreview
               key={post.slug}

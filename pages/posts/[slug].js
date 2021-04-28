@@ -1,17 +1,19 @@
-import Head from "next/head";
-import { renderMetaTags, useQuerySubscription } from "react-datocms";
-import Container from "../../components/container";
-import Layout from "../../components/layout";
-import MoreStories from "../../components/more-stories";
-import PostBody from "../../components/post-body";
-import SiteNav from "../../components/site-nav";
-import PostHeader from "../../components/post-header";
-import SectionSeparator from "../../components/section-separator";
-import { request } from "../../lib/datocms";
-import { metaTagsFragment, responsiveImageFragment } from "../../lib/fragments";
+import { metaTagsFragment, responsiveImageFragment } from "lib/fragments"
+import { renderMetaTags, useQuerySubscription } from "react-datocms"
+import { request } from "lib/datocms"
+import activeCategories from 'lib/activeCategories'
+import Container from "components/container"
+import Head from "next/head"
+import Layout from "components/layout"
+import MoreStories from "components/more-stories"
+import PostBody from "components/post-body"
+import PostHeader from "components/post-header"
+import PostMeta from 'components/post-meta'
+import SectionSeparator from "components/section-separator"
+import SiteNav from "components/site-nav"
 
 export async function getStaticPaths() {
-  const data = await request({ query: `{ allPosts { slug } }` });
+  const data = await request({ query: `{ allPosts { slug } }` })
 
   const paths = data.allPosts.map((post) => ({
     params: { slug: post.slug },
@@ -71,10 +73,6 @@ export async function getStaticProps({ params, preview = false }) {
             slug
           }
         }
-        categories: allCategories{
-          slug
-          name
-        }
         morePosts: allPosts(orderBy: date_DESC, first: 2, filter: {slug: {neq: $slug}}) {
           title
           slug
@@ -101,25 +99,35 @@ export async function getStaticProps({ params, preview = false }) {
     },
   };
 
+  const categories = await activeCategories()
+  const initialData = await request(graphqlRequest)
+
+  let subscription = null
+  if(preview){
+    subscription = {
+      ...graphqlRequest,
+      initialData,
+      token: process.env.NEXT_EXAMPLE_CMS_DATOCMS_API_TOKEN,
+      environment: process.env.NEXT_DATOCMS_ENVIRONMENT || null,
+    }
+  } else {
+    subscription = {
+      enabled: false,
+      initialData,
+    }
+  }
+
   return {
     props: {
-      subscription: preview
-        ? {
-            ...graphqlRequest,
-            initialData: await request(graphqlRequest),
-            token: process.env.NEXT_EXAMPLE_CMS_DATOCMS_API_TOKEN,
-          }
-        : {
-            enabled: false,
-            initialData: await request(graphqlRequest),
-          },
+      subscription,
+      categories
     },
-  };
+  }
 }
 
-export default function Post({ subscription, preview }) {
+export default ({ subscription, preview, categories }) => {
   const {
-    data: { site, post, morePosts, categories },
+    data: { site, post, morePosts },
   } = useQuerySubscription(subscription);
 
   const metaTags = post.seo.concat(site.favicon);
@@ -133,8 +141,13 @@ export default function Post({ subscription, preview }) {
           <PostHeader
             title={post.title}
             coverImage={post.coverImage}
-            date={post.date}
           />
+          <div className="mb-8 max-w-2xl mx-auto">
+            <PostMeta
+              category={post.category}
+              date={post.date}
+            />
+          </div>          
           <PostBody content={post.content} />
         </article>
         <SectionSeparator />

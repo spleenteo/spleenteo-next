@@ -3,7 +3,7 @@ import Date from '../components/date'
 import CoverImage from '../components/cover-image'
 import PostTitle from '../components/post-title'
 
-export default function PostHeader({ title, coverImage, date }) {
+export default function PostHeader({ title, coverImage }) {
   return (
     <>
       <PostTitle>{title}</PostTitle>
@@ -13,11 +13,6 @@ export default function PostHeader({ title, coverImage, date }) {
           responsiveImage={coverImage.responsiveImage}
         />
         { coverImage.responsiveImage.title && <p className="text-gray-500 text-sm text-right italic mt-1">{coverImage.responsiveImage.title}</p> }
-      </div>
-      <div className="max-w-2xl mx-auto">
-        <div className="mb-6 text-lg">
-          <Date dateString={date} />
-        </div>
       </div>
     </>
   )
