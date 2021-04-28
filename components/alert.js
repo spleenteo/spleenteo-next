@@ -10,20 +10,26 @@ export default function Alert({ preview }) {
       })}
     >
       <Container>
-        <div className="py-2 text-center text-sm">
           {preview ? (
             <>
-              This is page is showing draft content.{' '}
-              <a
-                href="/api/exit-preview"
-                className="underline hover:text-cyan duration-200 transition-colors"
-              >
-                Click here
-              </a>{' '}
-              to exit preview mode.
+              <div className="fixed bottom-0 left-0 py-2 text-center text-sm">
+                <div class="p-2">
+                  <div class="inline-flex items-center bg-white leading-none text-pink-600 rounded-full p-2 shadow text-teal text-sm">
+                    <span class="inline-flex bg-pink-600 text-white rounded-full h-6 px-3 justify-center items-center">
+                      <a
+                        href="/api/exit-preview"
+                        className="underline hover:text-cyan duration-200 transition-colors"
+                      >
+                      exit preview.
+                      </a>{' '}
+                    
+                    </span>
+                    <span class="inline-flex px-2">This page is showing draft content.{' '}</span>
+                  </div>
+                </div>
+              </div>
             </>
           ) : ("")}
-        </div>
       </Container>
     </div>
   )
