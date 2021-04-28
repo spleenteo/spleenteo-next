@@ -12,6 +12,7 @@ export default function PostHeader({ title, coverImage, date }) {
           title={title}
           responsiveImage={coverImage.responsiveImage}
         />
+        { coverImage.responsiveImage.title && <p className="text-gray-500 text-sm text-right italic mt-1">{coverImage.responsiveImage.title}</p> }
       </div>
       <div className="max-w-2xl mx-auto">
         <div className="mb-6 text-lg">
