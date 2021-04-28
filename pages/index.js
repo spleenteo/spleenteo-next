@@ -6,11 +6,10 @@ import Intro from "../components/intro";
 import SiteNav from "../components/site-nav";
 import Layout from "../components/layout";
 import MoreStories from "../components/more-stories";
-import SectionSeparator from "../components/section-separator";
 import PostPreview from '../components/post-preview'
 import { request } from "../lib/datocms";
 import { metaTagsFragment, responsiveImageFragment } from "../lib/fragments";
-import activeCategories from 'utils/activeCategories';
+import activeCategories from 'lib/activeCategories';
 
 export async function getStaticProps({ preview }) {
   const graphqlRequest = {
@@ -27,12 +26,6 @@ export async function getStaticProps({ preview }) {
           seo: _seoMetaTags {
             ...metaTagsFragment
           }
-        }
-        allCategories {
-          name
-          slug
-          description
-          id
         }
         allPosts(orderBy: date_DESC, filter: {isPublic: { eq: true }}) {
           title
@@ -59,24 +52,33 @@ export async function getStaticProps({ preview }) {
     preview,
   };
 
+  const categories = await activeCategories()
+  const initialData = await request(graphqlRequest)
+
+  let subscription = null
+  if(preview){
+    subscription = {
+      ...graphqlRequest,
+      initialData,
+      token: process.env.NEXT_EXAMPLE_CMS_DATOCMS_API_TOKEN,
+      environment: process.env.NEXT_DATOCMS_ENVIRONMENT || null,
+    }
+  } else {
+    subscription = {
+      enabled: false,
+      initialData,
+    }
+  }
+
   return {
     props: {
-      subscription: preview
-        ? {
-            ...graphqlRequest,
-            initialData: await request(graphqlRequest),
-            token: process.env.NEXT_EXAMPLE_CMS_DATOCMS_API_TOKEN,
-            environment: process.env.NEXT_DATOCMS_ENVIRONMENT || null,
-          }
-        : {
-            enabled: false,
-            initialData: await request(graphqlRequest),
-          },
+      subscription,
+      categories
     },
-  };
+  }
 }
 
-export default function Index({ subscription }) {
+export default ({ subscription, categories }) => {
   const {
     data: { allPosts, allCategories, site, blog },
   } = useQuerySubscription(subscription);
@@ -85,7 +87,6 @@ export default function Index({ subscription }) {
   const higlights = [allPosts[1], allPosts[2]];
   const morePosts = allPosts.slice(3);
   const metaTags = blog.seo.concat(site.favicon);
-  const categories = activeCategories(allCategories, allPosts);
 
   return (
     <>
