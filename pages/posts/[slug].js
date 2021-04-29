@@ -58,6 +58,9 @@ export async function getStaticProps({ params, preview = false }) {
                 }
               }
               ... on SoundcloudBlockRecord {
+                url
+              }
+              ... on SpotifyBlockRecord {
                 id
                 url
               }
