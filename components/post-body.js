@@ -30,7 +30,7 @@ export default function PostBody({ content }) {
                   className="max-w-max mx-auto md:max-w-full"
                 />
               case "SpotifyBlockRecord":
-                return <iframe src={record.url} width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media" />
+                return <iframe src={record.url} width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
               case "PodcastBlockRecord":
                 return <iframe
                   allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0"
