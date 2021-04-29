@@ -1,15 +1,14 @@
-import CoverImage from '../components/cover-image'
-import PostMeta from '../components/post-meta'
+import CoverImage from 'components/cover-image'
 import Link from 'next/link'
+import PostMeta from 'components/post-meta'
 
 export default function HeroPost({
-  title,
+  category,
   coverImage,
   date,
   excerpt,
-  author,
   slug,
-  category,
+  title,
 }) {
   return (
     <section>
@@ -27,6 +26,7 @@ export default function HeroPost({
               <a className="hover:underline">{title}</a>
             </Link>
           </h3>
+          <p className="my-2">{excerpt}</p>
           <PostMeta
             category={category}
             date={date}
