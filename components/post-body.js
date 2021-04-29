@@ -14,19 +14,19 @@ export default function PostBody({ content }) {
               case "ImageBlockRecord":
                 return <ResponsiveImage
                   img={record.image.responsiveImage}
-                  className="max-w-max mx-auto"
+                  className="max-w-max mx-auto md:max-w-full"
                 />;
               case "VideoBlockRecord":
                 return <ReactPlayer
                   url={record.video.url}
                   controls="true"
-                  className="max-w-max mx-auto"
+                  className="max-w-max mx-auto md:max-w-full"
                 />
               case "SoundcloudBlockRecord":
                 return <ReactPlayer
                   url={record.url}
                   controls="true"
-                  className="max-w-max mx-auto"
+                  className="max-w-max mx-auto md:max-w-full"
                 />
 
               default:
