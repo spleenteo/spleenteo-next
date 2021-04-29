@@ -2,6 +2,7 @@ import { metaTagsFragment, responsiveImageFragment } from "lib/fragments"
 import { renderMetaTags, useQuerySubscription } from "react-datocms"
 import { request } from "lib/datocms"
 import activeCategories from 'lib/activeCategories'
+import CategoryAbstract from "components/category-abstract"
 import Container from "components/container"
 import Head from "next/head"
 import Layout from "components/layout"
@@ -155,10 +156,12 @@ export default ({ subscription, preview, categories }) => {
           <PostBody content={post.content} />
         </article>
         <SectionSeparator />
-        <div>
-          <h4 className="mb-8 text-3xl md:text-3xl font-bold tracking-tighter leading-tight">{post.category.name}</h4>
-          <div dangerouslySetInnerHTML={{__html: post.category.description}} />
-        </div>
+        <CategoryAbstract
+                key={post.category.slug}
+                name={post.category.name}
+                description={post.category.description}
+                slug={post.category.slug}
+        />
         <SectionSeparator />
         {morePosts.length > 0 && <MoreStories posts={morePosts} categories={categories} />}
       </Container>
