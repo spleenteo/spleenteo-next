@@ -64,6 +64,10 @@ export async function getStaticProps({ params, preview = false }) {
                 id
                 url
               }
+              ... on PodcastBlockRecord {
+                id
+                url
+              }
             }
           }
           date

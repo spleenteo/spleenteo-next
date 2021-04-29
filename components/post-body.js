@@ -31,7 +31,12 @@ export default function PostBody({ content }) {
                 />
               case "SpotifyBlockRecord":
                 return <iframe src={record.url} width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media" />
-
+              case "PodcastBlockRecord":
+                return <iframe
+                  allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0"
+                  height="175"
+                  style={{width:"100%", maxWidth: "660px", overflow: "hidden", background: "transparent"}}
+                  sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activationallow-top-navigation-by-user-activation" src={record.url} />
               default:
                 return (
                   <>
