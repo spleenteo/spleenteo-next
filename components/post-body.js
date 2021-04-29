@@ -1,7 +1,8 @@
-import { StructuredText, Image } from "react-datocms";
+import { StructuredText, Image } from "react-datocms"
 import React from 'react'
 import ReactPlayer from 'react-player'
 import ResponsiveImage from './responsive-image'
+
 
 export default function PostBody({ content }) {
   return (
@@ -28,6 +29,8 @@ export default function PostBody({ content }) {
                   controls="true"
                   className="max-w-max mx-auto md:max-w-full"
                 />
+              case "SpotifyBlockRecord":
+                return <iframe src={record.url} width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media" />
 
               default:
                 return (
