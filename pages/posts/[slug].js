@@ -61,11 +61,7 @@ export async function getStaticProps({ params, preview = false }) {
                 id
                 url
               }
-              ... on SpotifyBlockRecord {
-                id
-                url
-              }
-              ... on PodcastBlockRecord {
+              ... on IframeBlockRecord {
                 id
                 url
               }

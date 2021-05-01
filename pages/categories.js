@@ -1,13 +1,13 @@
-import Head from "next/head";
-import { renderMetaTags, useQuerySubscription } from "react-datocms";
-import CategoryAbstract from "../components/category-abstract";
-import Container from "../components/container";
-import Layout from "../components/layout";
-import PostTitle from '../components/post-title';
-import SiteNav from "../components/site-nav";
-import { request } from "../lib/datocms";
-import { metaTagsFragment } from "../lib/fragments";
-import activeCategories from 'lib/activeCategories';
+import { metaTagsFragment } from "lib/fragments"
+import { renderMetaTags, useQuerySubscription } from "react-datocms"
+import { request } from "lib/datocms"
+import activeCategories from 'lib/activeCategories'
+import CategoryAbstract from "components/category-abstract"
+import Container from "components/container"
+import Head from "next/head"
+import Layout from "components/layout"
+import PostTitle from 'components/post-title'
+import SiteNav from "components/site-nav"
 
 
 export async function getStaticProps({ preview }) {
