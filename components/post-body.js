@@ -8,18 +8,31 @@ const renderInlineRecord = ({ record }) => {
     case 'PostRecord':
       return <a href={ `/posts/${ record.slug }`} title={record.title}>{record.title} </a>
     case 'CategoryRecord':
-      return <a href={ `/categories/${ record.slug }`} title={record.name}>{record.name} </a>
+      return <a href={ `/categories/${ record.slug }`} title={record.name}>{record.title} </a>
     default:
       return ''
   }
 }
+
+const renderLinkToRecord = ({ record,children }) => {
+  switch(record.__typename) {
+    case 'PostRecord':
+      return <a href={ `/posts/${ record.slug }`} title={record.title}>{children[0]} </a>
+    case 'CategoryRecord':
+      return <a href={ `/categories/${ record.slug }`} title={record.name}>{children[0]} </a>
+    default:
+      return ''
+  }
+}
+
+
 export default function PostBody({ content }) {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="prose prose-lg prose-green">
         <StructuredText
           data={content}
-          renderLinkToRecord={ renderInlineRecord }
+          renderLinkToRecord={ renderLinkToRecord }
           renderInlineRecord={ renderInlineRecord }
           renderBlock={({ record }) => {
             switch (record.__typename) {
