@@ -38,6 +38,11 @@ export async function getStaticProps({ params, preview = false }) {
           }
           title
           slug
+          tags {
+            name
+            id
+            slug
+          }
           content {
             value
             links {
@@ -109,6 +114,10 @@ export async function getStaticProps({ params, preview = false }) {
             name
             slug
           }
+          tags{
+            name
+            slug
+          }
         }
       }
 
@@ -168,7 +177,8 @@ export default ({ subscription, preview, categories }) => {
             <PostMeta
               category={post.category}
               date={post.date}
-            />
+              tags={post.tags}
+              />
           </div>          
           <PostBody content={post.content} />
         </article>

@@ -1,7 +1,7 @@
 import Date from '../components/date'
 import Link from 'next/link'
 
-export default function PostMeta({ category, date }) {
+export default function PostMeta({ category, date, tags }) {
   return (
     <div>      
       <span className="mb-4 md:mb-0 text-lg">
@@ -11,6 +11,12 @@ export default function PostMeta({ category, date }) {
       <Link as={`/categories/${category.slug}`} href="/categories/[slug]">
         <a className="hover:underline text-green-600">{category.name}</a>
       </Link>
+      {tags.map(tag => (
+        <Link as={`/tags/${tag.slug}`} href={`/tags/${tag.slug}`}>
+          <a className="hover:underline text-green-600"> / {tag.name} </a>
+        </Link>
+        )
+      )}
     </div>
   )
 }
