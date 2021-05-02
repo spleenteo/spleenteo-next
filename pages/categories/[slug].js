@@ -1,12 +1,12 @@
-import { metaTagsFragment, responsiveImageFragment } from "../../lib/fragments";
-import { renderMetaTags, useQuerySubscription } from "react-datocms";
-import { request } from "../../lib/datocms";
-import Container from "../../components/container";
-import Head from "next/head";
-import Layout from "../../components/layout";
-import PostPreview from '../../components/post-preview'
-import PostTitle from '../../components/post-title'
-import SiteNav from "../../components/site-nav";
+import { metaTagsFragment, responsiveImageFragment } from "lib/fragments"
+import { renderMetaTags, useQuerySubscription } from "react-datocms"
+import { request } from "lib/datocms"
+import Container from "components/container"
+import Head from "next/head"
+import Layout from "components/layout"
+import PostPreview from 'components/post-preview'
+import PostTitle from 'components/post-title'
+import SiteNav from "components/site-nav";
 
 export async function getStaticPaths() {
   const data = await request({ query: `{ allCategories { slug id } }` });
