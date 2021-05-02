@@ -3,13 +3,24 @@ import React from 'react'
 import ReactPlayer from 'react-player'
 import ResponsiveImage from './responsive-image'
 
-
+const renderInlineRecord = ({ record }) => {
+  switch(record.__typename) {
+    case 'PostRecord':
+      return <a href={ `/posts/${ record.slug }`} title={record.title}>{record.title} </a>
+    case 'CategoryRecord':
+      return <a href={ `/categories/${ record.slug }`} title={record.name}>{record.name} </a>
+    default:
+      return ''
+  }
+}
 export default function PostBody({ content }) {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="prose prose-lg prose-green">
         <StructuredText
           data={content}
+          renderLinkToRecord={ renderInlineRecord }
+          renderInlineRecord={ renderInlineRecord }
           renderBlock={({ record }) => {
             switch (record.__typename) {
               case "ImageBlockRecord":

@@ -40,6 +40,19 @@ export async function getStaticProps({ params, preview = false }) {
           slug
           content {
             value
+            links {
+              __typename
+              ... on PostRecord {
+                id
+                slug
+                title
+              }
+              ... on CategoryRecord {
+                id
+                slug
+                name
+              }
+            }
             blocks {
               __typename
               ...on ImageBlockRecord {
