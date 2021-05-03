@@ -4,7 +4,7 @@ import { request } from "lib/datocms"
 import Container from "components/container"
 import Head from "next/head"
 import Layout from "components/layout"
-import PostPreview from 'components/post-preview'
+import PostGrid from "components/post-grid"
 import PostTitle from 'components/post-title'
 import SiteNav from "components/site-nav"
 
@@ -101,22 +101,8 @@ export default function Category({ subscription, preview }) {
       <Container>
         <PostTitle>{category.name}</PostTitle>
         <div className="mb-10 md:text-1xl lg:text-2xl md:leading-relaxed lg:w-2/3 xl:w-1/2" dangerouslySetInnerHTML={{__html: category.description}} />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:gap-16 gap-y-20 mb-32">
-          {articles.map(post =>
-            <PostPreview
-              key={post.slug}
-              title={post.title}
-              coverImage={post.coverImage}
-              date={post.date}
-              author={post.author}
-              slug={post.slug}
-              excerpt={post.excerpt}
-              category={post.category}
-              tags={post.tags}
-            />      
-          )}
-        </div>
 
+        <PostGrid posts={articles} />
       </Container>
     </Layout>
   );
