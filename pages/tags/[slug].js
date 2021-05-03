@@ -9,28 +9,28 @@ import PostTitle from 'components/post-title'
 import SiteNav from "components/site-nav"
 
 export async function getStaticPaths() {
-  const data = await request({ query: `{ allCategories { slug id } }` });
+  const data = await request({ query: `{ allTags { slug id } }` });
   
-  const paths = data.allCategories.map((category) => ({
-    params: { slug: category.slug, id: category.id },
+  const paths = data.allTags.map((tag) => ({
+    params: { slug: tag.slug, id: tag.id },
   }))
 
   return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params, preview = false }) {
-  const categories = await request({ query: `{ allCategories { slug id } }` });
-  const category = categories.allCategories.find(cat => cat.slug == params.slug)
+  const tags = await request({ query: `{ allTags { slug id } }` });
+  const tag = tags.allTags.find(tag => tag.slug == params.slug)
 
   const graphqlRequest = {
     query: `
-      query CategoryBySlug($id: ItemId) {
+      query TagsBySlug($id: ItemId) {
         site: _site {
           favicon: faviconMetaTags {
             ...metaTagsFragment
           }
         }
-        category(filter: {id: {eq: $id}}) {
+        tag(filter: {id: {eq: $id}}) {
           name
           description
           slug
@@ -39,12 +39,17 @@ export async function getStaticProps({ params, preview = false }) {
             ...metaTagsFragment
           }
         }
-        posts: allPosts(orderBy: date_DESC, filter: {isPublic: {eq: true}, category: {eq: $id}}) {
+        posts: allPosts(orderBy: date_DESC, filter: {isPublic: {eq: true}, tags: {allIn: [$id]}}) {
           title
           excerpt
           slug
           date
           category{
+            name
+            slug
+          }
+          tags{
+            id
             name
             slug
           }
@@ -61,7 +66,7 @@ export async function getStaticProps({ params, preview = false }) {
     `,
     preview,
     variables: {
-      id: category.id
+      id: tag.id
     },
   };
 
@@ -81,12 +86,12 @@ export async function getStaticProps({ params, preview = false }) {
   };
 }
 
-export default function Category({ subscription, preview }) {
+export default function Tag({ subscription, preview }) {
   const {
-    data: { site, category, posts },
+    data: { site, tag, posts },
   } = useQuerySubscription(subscription);
 
-  const metaTags = category.seo.concat(site.favicon);
+  const metaTags = tag.seo.concat(site.favicon);
   const articles = posts;
 
   return (
@@ -94,8 +99,8 @@ export default function Category({ subscription, preview }) {
       <Head>{renderMetaTags(metaTags)}</Head>
       <SiteNav />
       <Container>
-        <PostTitle>{category.name}</PostTitle>
-        <div className="mb-10 md:text-2xl md:leading-relaxed" dangerouslySetInnerHTML={{__html: category.description}} />
+        <PostTitle>{tag.name}</PostTitle>
+        <div className="mb-10 md:text-2xl md:leading-relaxed" dangerouslySetInnerHTML={{__html: tag.description}} />
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-x-16 lg:gap-x-8 gap-y-20 md:gap-y-32 mb-32">
           {articles.map(post =>
             <PostPreview
@@ -107,6 +112,7 @@ export default function Category({ subscription, preview }) {
               slug={post.slug}
               excerpt={post.excerpt}
               category={post.category}
+              tags={post.tags}
             />      
           )}
         </div>

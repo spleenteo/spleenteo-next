@@ -84,26 +84,32 @@ export default function Index({ subscription, categories, tags }) {
         <Container>
           <article>
             <PostTitle>{page.title}</PostTitle>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {categories.map(cat => (
-                <CategoryAbstract
-                  key={cat.slug}
-                  name={cat.name}
-                  description={cat.description}
-                  slug={cat.slug}
-                />
-              ))}              
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-8 md:gap-x-2">
+              <div className="col-span-3 md:col-span-2 lg:col-span-6 md:mr-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                  {categories.map(cat => (
+                    <CategoryAbstract
+                      key={cat.slug}
+                      name={cat.name}
+                      description={cat.description}
+                      slug={cat.slug}
+                    />
+                  ))}              
+                </div>
+              </div>
+              <div className="col-span-3 md:col-span-1 lg:col-span-2 bg-gray-100 p-8 rounded">
+                <h2 className="mb-8 text-4sm md:text-2xl font-bold tracking-tighter leading-tight">Parlo anche di:</h2>
+                <ul className="flex flex-wrap my-8">
+                  {tags.map(tag => (
+                    <li className="mb-3 mr-3 rounded-md bg-green-500 text-white flex  font-bold p-1 px-4">
+                      <Link as={`/tags/${tag.slug}`} href="/tags/[slug]">
+                      <a className="hover:underline">{tag.name}</a>
+                    </Link>
+                    </li>
+                  ))}       
+                </ul>
+              </div>
             </div>
-            <h2 className="mb-8 text-4xl md:text-5xl font-bold tracking-tighter leading-tight">Parlo anche di:</h2>
-            <ul className="flex flex-row flex-wrap my-8">
-              {tags.map(tag => (
-                <li className="mb-3 mr-3 rounded-md bg-green-500 text-white flex items-center justify-center md:text-lg lg:text-2xl font-bold rounded-t-xl p-2 px-4">
-                  <Link as={`/tags/${tag.slug}`} href="/tags/[slug]">
-                  <a className="hover:underline">{tag.name}</a>
-                </Link>
-                </li>
-              ))}       
-            </ul>
           </article>
         </Container>
       </Layout>
