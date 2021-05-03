@@ -9,6 +9,7 @@ export default function HeroPost({
   excerpt,
   slug,
   title,
+  tags
 }) {
   return (
     <section>
@@ -30,6 +31,7 @@ export default function HeroPost({
           <PostMeta
             category={category}
             date={date}
+            tags={tags}
           />
         </div>
       </div>

@@ -48,6 +48,11 @@ export async function getStaticProps({ params, preview = false }) {
             name
             slug
           }
+          tags{
+            name
+            slug
+            id
+          }
           coverImage {
             responsiveImage(imgixParams: {fm: jpg, fit: crop, w: 800, h: 800 }) {
               ...responsiveImageFragment
@@ -95,8 +100,8 @@ export default function Category({ subscription, preview }) {
       <SiteNav />
       <Container>
         <PostTitle>{category.name}</PostTitle>
-        <div className="mb-10 md:text-2xl md:leading-relaxed" dangerouslySetInnerHTML={{__html: category.description}} />
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-x-16 lg:gap-x-8 gap-y-20 md:gap-y-32 mb-32">
+        <div className="mb-10 md:text-1xl lg:text-2xl md:leading-relaxed lg:w-2/3 xl:w-1/2" dangerouslySetInnerHTML={{__html: category.description}} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:gap-16 gap-y-20 mb-32">
           {articles.map(post =>
             <PostPreview
               key={post.slug}
@@ -107,6 +112,7 @@ export default function Category({ subscription, preview }) {
               slug={post.slug}
               excerpt={post.excerpt}
               category={post.category}
+              tags={post.tags}
             />      
           )}
         </div>

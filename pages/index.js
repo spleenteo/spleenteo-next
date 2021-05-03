@@ -2,6 +2,7 @@ import { metaTagsFragment, responsiveImageFragment } from "lib/fragments"
 import { renderMetaTags, useQuerySubscription } from "react-datocms"
 import { request } from "lib/datocms"
 import activeCategories from 'lib/activeCategories'
+import activeTags from 'lib/activeTags'
 import Container from "components/container"
 import Head from "next/head"
 import HeroPost from "components/hero-post"
@@ -43,6 +44,11 @@ export async function getStaticProps({ preview }) {
             slug
             id
           }
+          tags{
+            name
+            slug
+            id
+          }
         }
       }
 
@@ -53,6 +59,7 @@ export async function getStaticProps({ preview }) {
   };
 
   const categories = await activeCategories()
+  const tags = await activeTags()
   const initialData = await request(graphqlRequest)
 
   let subscription = null
@@ -105,6 +112,7 @@ export default ({ subscription, categories }) => {
               slug={heroPost.slug}
               excerpt={heroPost.excerpt}
               category={heroPost.category}
+              tags={heroPost.tags}
             />
           )}
           
@@ -119,6 +127,7 @@ export default ({ subscription, categories }) => {
                 slug={post.slug}
                 excerpt={post.excerpt}
                 category={post.category}
+                tags={post.tags}
               />
             ))}
           </div>
