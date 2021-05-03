@@ -10,6 +10,7 @@ export default function PostPreview({
   excerpt,
   slug,
   category,
+  tags,
 }) {
   return (
     <div>
@@ -29,6 +30,7 @@ export default function PostPreview({
       <PostMeta
         category={category}
         date={date}
+        tags={tags}
       />
     </div>
   )
