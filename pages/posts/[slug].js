@@ -163,6 +163,7 @@ export default ({ subscription, preview, categories }) => {
 
   const metaTags = post.seo.concat(site.favicon);
 
+
   return (
     <Layout preview={preview}>
       <Head>{renderMetaTags(metaTags)}</Head>
@@ -183,25 +184,13 @@ export default ({ subscription, preview, categories }) => {
           <PostBody content={post.content} />
         </article>
         <div id="graphcomment" />
-        <script dangerouslySetInnerHTML={{ __html: `
-          const __semio__params = {
-            graphcommentId: "spleenteo", // make sure the id is yours
-        
-            behaviour: {
-              // HIGHLY RECOMMENDED
-              uid: "`+post.slug+`",
-            },
-          }
-        
-          function __semio__onload() {
-            __semio__gc_graphlogin(__semio__params)
-          }
-          (function() {
-            var gc = document.createElement('script'); gc.type = 'text/javascript'; gc.async = true;
-            gc.onload = __semio__onload; gc.defer = true; gc.src = 'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gc);
-          })();
-        `,}}/>
+        <script async dangerouslySetInnerHTML={{ __html: `
+          var gc_params = {
+            graphcomment_id: 'spleenteo',
+            target: document.getElementById('#graphcomment'), // optional, #graphcomment by default
+          };
+          window.graphcomment(gc_params);`,
+        }}/>
 
         <SectionSeparator />
         <CategoryAbstract
