@@ -12,6 +12,8 @@ import PostHeader from "components/post-header"
 import PostMeta from 'components/post-meta'
 import SectionSeparator from "components/section-separator"
 import SiteNav from "components/site-nav"
+import Script from 'next/script'
+
 
 export async function getStaticPaths() {
   const data = await request({ query: `{ allPosts { slug } }` })
@@ -184,6 +186,8 @@ export default ({ subscription, preview, categories }) => {
           <PostBody content={post.content} />
         </article>
         <div id="graphcomment" />
+        <Script src="https://graphcomment.com/js/integration.js" />
+
         <script async dangerouslySetInnerHTML={{ __html: `
           var gc_params = {
             graphcomment_id: 'spleenteo',

@@ -5,7 +5,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="it">
         <Head>
-          <script async src="https://graphcomment.com/js/integration.js"></script>
           <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y992JCKGDQ"></script>
           <script
             async
