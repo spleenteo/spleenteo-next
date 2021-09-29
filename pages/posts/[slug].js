@@ -182,6 +182,27 @@ export default ({ subscription, preview, categories }) => {
           </div>          
           <PostBody content={post.content} />
         </article>
+        <div id="graphcomment" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          const __semio__params = {
+            graphcommentId: "spleenteo", // make sure the id is yours
+        
+            behaviour: {
+              // HIGHLY RECOMMENDED
+              uid: "{post.slug}",
+            },
+          }
+        
+          function __semio__onload() {
+            __semio__gc_graphlogin(__semio__params)
+          }
+          (function() {
+            var gc = document.createElement('script'); gc.type = 'text/javascript'; gc.async = true;
+            gc.onload = __semio__onload; gc.defer = true; gc.src = 'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gc);
+          })();
+        `,}}/>
+
         <SectionSeparator />
         <CategoryAbstract
                 key={post.category.slug}
