@@ -189,7 +189,7 @@ export default ({ subscription, preview, categories }) => {
         
             behaviour: {
               // HIGHLY RECOMMENDED
-              uid: "{post.slug}",
+              uid: post.slug,
             },
           }
         
