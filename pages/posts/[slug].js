@@ -186,8 +186,8 @@ export default ({ subscription, preview, categories }) => {
           <PostBody content={post.content} />
         </article>
         <div id="graphcomment" />
-        <Script src="https://graphcomment.com/js/integration.js" />
-        <script async dangerouslySetInnerHTML={{ __html: `
+        <Script src="https://graphcomment.com/js/integration.js" strategy="beforeInteractive" />
+        <Script strategy="lazyOnload" dangerouslySetInnerHTML={{ __html: `
           var gc_params = {
             graphcomment_id: 'spleenteo',
             target: document.getElementById('#graphcomment'), // optional, #graphcomment by default
