@@ -187,7 +187,6 @@ export default ({ subscription, preview, categories }) => {
         </article>
         <div id="graphcomment" />
         <Script src="https://graphcomment.com/js/integration.js" />
-
         <script async dangerouslySetInnerHTML={{ __html: `
           var gc_params = {
             graphcomment_id: 'spleenteo',
