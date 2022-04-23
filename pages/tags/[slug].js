@@ -39,7 +39,7 @@ export async function getStaticProps({ params, preview = false }) {
             ...metaTagsFragment
           }
         }
-        posts: allPosts(orderBy: date_DESC, filter: {isPublic: {eq: true}, tags: {allIn: [$id]}}) {
+        posts: allPosts(orderBy: date_DESC, filter: {tags: {allIn: [$id]}}) {
           title
           excerpt
           slug
