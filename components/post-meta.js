@@ -12,7 +12,7 @@ export default function PostMeta({ category, date, tags }) {
         <a className="hover:underline text-green-600">{category.name}</a>
       </Link>
       {tags.map(tag => (
-        <Link as={`/tags/${tag.slug}`} href={`/tags/${tag.slug}`}>
+        <Link key={tag.name} as={`/tags/${tag.slug}`} href={`/tags/${tag.slug}`}>
           <a className="hover:underline text-green-600"> / {tag.name} </a>
         </Link>
         )
