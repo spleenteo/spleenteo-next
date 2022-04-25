@@ -28,7 +28,7 @@ export async function getStaticProps({ preview }) {
             ...metaTagsFragment
           }
         }
-        allPosts(orderBy: date_DESC, filter: {isPublic: { eq: true }}) {
+        allPosts(orderBy: date_DESC) {
           title
           slug
           excerpt
@@ -85,7 +85,7 @@ export async function getStaticProps({ preview }) {
   }
 }
 
-export default ({ subscription, categories }) => {
+const Index = function({ subscription, categories }) {
   const {
     data: { allPosts, site, blog },
   } = useQuerySubscription(subscription);
@@ -139,3 +139,5 @@ export default ({ subscription, categories }) => {
     </>
   );
 }
+
+export default Index;

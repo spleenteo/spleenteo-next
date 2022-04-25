@@ -39,7 +39,8 @@ export async function getStaticProps({ params, preview = false }) {
             ...metaTagsFragment
           }
         }
-        posts: allPosts(orderBy: date_DESC, filter: {isPublic: {eq: true}, category: {eq: $id}}) {
+        posts: allPosts(orderBy: date_DESC, filter: {category: {eq: $id}}) {
+          id
           title
           excerpt
           slug
@@ -58,7 +59,6 @@ export async function getStaticProps({ params, preview = false }) {
               ...responsiveImageFragment
             }
           }
-
         }
       }
       ${metaTagsFragment}

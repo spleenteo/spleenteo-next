@@ -1,14 +1,16 @@
 import Alert from '../components/alert'
 import Footer from '../components/footer'
 
-export default function Layout({ preview, children }) {
+const Layout = function({ preview, children }) {
   return (
-    <>
+    <div>
       <div className="min-h-screen">
         <Alert preview={preview} />
         <main>{children}</main>
       </div>
       <Footer />
-    </>
+    </div>
   )
-}
+};
+
+export default Layout;

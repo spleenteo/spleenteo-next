@@ -27,7 +27,7 @@ export async function getStaticProps({ preview }) {
             ...metaTagsFragment
           }
         }
-        allPosts(filter: {isPublic: {eq: true}}) {
+        allPosts {
           id
           category {
             id
