@@ -183,17 +183,9 @@ const Post = function({ subscription, preview, categories }) {
           </div>          
           <PostBody content={post.content} />
         </article>
-        <div id="graphcomment" />
-        <Script src="https://graphcomment.com/js/integration.js" strategy="beforeInteractive" />
-        <Script strategy="lazyOnload" dangerouslySetInnerHTML={{ __html: `
-          var gc_params = {
-            graphcomment_id: 'spleenteo',
-            target: document.getElementById('#graphcomment'), // optional, #graphcomment by default
-          };
-          window.graphcomment(gc_params);`,
-        }}/>
 
         <SectionSeparator />
+
         <CategoryAbstract
                 key={post.category.slug}
                 name={post.category.name}
