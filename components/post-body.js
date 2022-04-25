@@ -58,7 +58,7 @@ export default function PostBody({ content }) {
               default:
                 return (
                   <>
-                    <p>Don't know how to render a block!</p>
+                    <p>Don&apos;t know how to render a block!</p>
                     <pre>{JSON.stringify(record, null, 2)}</pre>
                   </>
                 );

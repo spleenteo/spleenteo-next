@@ -23,13 +23,13 @@ export default function Example() {
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
                     <div className="text-1xl md:text-3xl font-bold tracking-tighter leading-tight md:pr-8 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500">
-                      <a href="/">Spleenteo</a>.    
+                      <Link href="/"><a>Spleenteo</a></Link>.    
                     </div>
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
                       {navigation.map((item, itemIdx) =>
-                        <Link href={item[1]} >
+                        <Link key={item[1]} href={item[1]} >
                           <a className={deskClass}>{item[0]}</a>
                         </Link>
                       )}
@@ -53,7 +53,7 @@ export default function Example() {
             <Disclosure.Panel className="md:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 {navigation.map((item, itemIdx) =>
-                  <Link href={item[1]} >
+                  <Link key={item[1]+itemIdx} href={item[1]} >
                     <a className={mobClass}>{item[0]}</a>
                   </Link>
                 )}              </div>              
