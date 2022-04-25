@@ -14,7 +14,6 @@ import SectionSeparator from "components/section-separator"
 import SiteNav from "components/site-nav"
 import Script from 'next/script'
 
-
 export async function getStaticPaths() {
   const data = await request({ query: `{ allPosts { slug } }` })
 
@@ -158,13 +157,12 @@ export async function getStaticProps({ params, preview = false }) {
   }
 }
 
-export default ({ subscription, preview, categories }) => {
+const Post = function({ subscription, preview, categories }) {
   const {
     data: { site, post, morePosts },
   } = useQuerySubscription(subscription);
 
   const metaTags = post.seo.concat(site.favicon);
-
 
   return (
     <Layout preview={preview}>
@@ -208,3 +206,5 @@ export default ({ subscription, preview, categories }) => {
     </Layout>
   );
 }
+
+export default Post;
