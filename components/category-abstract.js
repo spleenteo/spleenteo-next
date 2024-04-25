@@ -8,8 +8,8 @@ export default function PostPreview({
   return (
     <div className="mb-10">
       <h2 className="mb-4 text-3xl md:text-3xl font-bold tracking-tighter leading-tight">
-        <Link as={`/categories/${slug}`} href="/categories/[slug]">
-          <a className="hover:underline">{name}</a>
+        <Link as={`/categories/${slug}`} href="/categories/[slug]" className="hover:underline">
+          {name}
         </Link>
       </h2>
       <div dangerouslySetInnerHTML={{__html: description}} />

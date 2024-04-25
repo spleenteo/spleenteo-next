@@ -43,13 +43,13 @@ export default function PostBody({ content }) {
               case "VideoBlockRecord":
                 return <ReactPlayer
                   url={record.video.url}
-                  controls="true"
+                  controls={true}
                   className="max-w-max mx-auto md:max-w-full"
                 />
               case "SoundcloudBlockRecord":
                 return <ReactPlayer
                   url={record.url}
-                  controls="true"
+                  controls={true}
                   className="max-w-max mx-auto md:max-w-full"
                 />
               case "IframeBlockRecord":
