@@ -102,8 +102,8 @@ export default function Index({ subscription, categories, tags }) {
                 <ul className="flex flex-wrap my-8">
                   {tags.map(tag => (
                     <li key={tag.name} className="mb-3 mr-3 rounded-md bg-green-500 text-white flex font-bold p-1 px-4">
-                      <Link as={`/tags/${tag.slug}`} href="/tags/[slug]">
-                        <a className="hover:underline">{tag.name}</a>
+                      <Link as={`/tags/${tag.slug}`} href="/tags/[slug]" className="hover:underline">
+                        {tag.name}
                       </Link>
                     </li>
                   ))}       

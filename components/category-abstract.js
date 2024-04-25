@@ -13,8 +13,8 @@ export default function PostPreview({
         </Link>
       </h2>
       <div dangerouslySetInnerHTML={{__html: description}} />
-      <Link as={`/categories/${slug}`} href="/categories/[slug]">
-          <a className="hover:underline text-green-600 mt-6 block">Tutti gli articoli</a>
+      <Link as={`/categories/${slug}`} href="/categories/[slug]" className="hover:underline text-green-600 mt-6 block">
+        Tutti gli articoli
       </Link>
     </div>
   )
